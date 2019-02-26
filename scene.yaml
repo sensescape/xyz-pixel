@@ -1,3 +1,9 @@
+# Author: Geraldine Sarmiento
+
+# Tangram Blocks
+# https://tangrams.github.io/blocks/
+# Patricio Gonzalez Vivo
+
 cameras:
     camera1:
         type: perspective
