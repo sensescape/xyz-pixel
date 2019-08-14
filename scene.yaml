@@ -157,7 +157,7 @@ layers:
             draw:
                 polygons:
                     style: parks-pixelate
-                    color: [0.976,1.000,0.996]
+                    color: [0.966,1.000,0.930]
                     visible: true
         
         forest-landcover:
@@ -167,6 +167,30 @@ layers:
                     style: parks-pixelate
                     color: [0.976,1.000,0.996]
                     visible: true
+
+        parks-and-national-forests-not-national-park:
+            filter:
+                all:
+                    - $zoom: { min: 4 }
+                    - kind: [park, national_park]
+                any:
+                    - not: { operator: [ "United States National Park Service", "United States Forest Service" ] }
+                    - not: { protect_class: ['2','3','5','6'] }
+            # default for national forests and more?
+            draw:
+                polygons:
+                    style: parks-pixelate
+                    color: [0.976,1.000,0.996]
+                    visible: true
+            national_park:
+                #filter: function() { return feature.name && (feature.name.indexOf('National Park') > -1); }
+                filter:
+                    all:
+                        - kind: parks-pixelate
+                        - not: [ protect_class: ['2','3','5','6'], operator: [ "United States National Park Service"] ]
+                draw:
+                    polygons:
+                        visible: true
 
     # roads:
     #     data: { source: mapzen, layer: roads }
@@ -288,7 +312,7 @@ layers:
             polygons:
                 visible: false
                 order: 329
-                color: [1.000,0.970,0.970]
+                color: [1.000,0.985,0.985]
 
         footprints:
             filter:
@@ -514,7 +538,7 @@ styles:
         shaders:
             defines:
                 PIXELATE_SCALE: 40.
-                PIXELATE_COLOR: color.rgb*.88
+                PIXELATE_COLOR: color.rgb*.85
                 PIXELATE_BACKGROUND_COLOR: color.rgb
 
     parks-pixelate:
@@ -523,7 +547,7 @@ styles:
         shaders:
             defines:
                 PIXELATE_SCALE: 30.
-                PIXELATE_COLOR: vec3(0.911,0.930,0.921)*.98
+                PIXELATE_COLOR: vec3(0.911,0.930,0.921)*.97
                 PIXELATE_BACKGROUND_COLOR: color.rgb
 
     polygons-pixelate:
