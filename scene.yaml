@@ -63,84 +63,13 @@ layers:
                 order: global.feature_order
                 color: [0.960,0.960,0.960]
 
-    landuse:
-        data: { source: mapzen }
-        draw:
-            polygons:
-                order: global.feature_order
-                visible: false
-        # tier1:
-        national_park:
-            filter:
-                all:
-                    - kind: [national_park, battlefield, protected_area]
-                any:
-                    - not: { operator: [ "United States Forest Service" ] }
-                    - protect_class: ['2','3','5']
-            draw:
-                polygons:
-                    style: polygons-pixelate
-                    color: [0.980,0.980,0.980]
-                    visible: true
-            us_national_park:
-                # yosemite national park, death valley national park, grand canyon national park
-                filter:
-                    any:
-                        - operator: [ "United States National Park Service" ]
-                        - protect_class: ['2','3','5']
-                draw:
-                    polygons:
-                        style: polygons-pixelate
-                        color: [0.980,0.980,0.980]
-                        visible: true
-
-        conservation:
-            filter:
-                $zoom: { min: 4 }
-                kind: [protected_area, nature_reserve, national_park]
-                not: { protect_class: ['2','3','5']}
-            draw:
-                polygons:
-                    style: polygons-pixelate
-                    color: [0.980,0.980,0.980]
-                    visible: true
-
-        # national_forest_level_6:
-        #     filter:
-        #         all:
-        #             - kind: forest
-        #         any:
-        #             - protect_class: ['6']
-        #             - operator: ['United States Forest Service']
-        #     draw:
-        #         polygons:
-        #             style: grid-green
-        #             color: [0.300,0.300,0.300]
-        #             visible: true
-        #         lines:
-        #             color: [0.740,0.740,0.740]
-        #             width: 1px
-        #             visible: true
-        #
-        # forest-landcover:
-        #     filter: { kind: [forest, natural_forest, wood, natural_wood, natural_park], $zoom: { min: 10 }, not: { operator: "United States Forest Service" } }
-        #     draw:
-        #         polygons:
-        #             style: grid-green
-        #             color: [0.300,0.300,0.300]
-        #             visible: true
-        #         lines:
-        #             color: [0.740,0.740,0.740]
-        #             width: 1px
-        #             visible: true
-
     water:
         data: { source: mapzen, layer: water }
         draw:
             polygons:
                 style: water-pixelate
                 order: global.feature_order
-                color: [1.000,1.000,1.000]
+                color: [0.980,0.988,1.000]
 
         lakes:
             filter:
@@ -166,125 +95,188 @@ layers:
                     - { $zoom: { min: 15 } }
             draw:
                 polygons:
-                    color: [1.000,1.000,1.000]
+                    color: [0.980,0.988,1.000]
 
         other-water-areas:
             filter: { not: { kind: [ocean, lake, water, reservoir] }, $zoom: { min: 11 }, area: { min: 100 } }
             draw:
                 polygons:
-                    color: [1.000,1.000,1.000]
+                    color: [0.980,0.988,1.000]
 
-    roads:
-        data: { source: mapzen, layer: roads }
+    landuse:
+        data: { source: mapzen }
         draw:
-            lines:
-                #color: black
-                width: 1px
+            polygons:
                 order: global.feature_order
-                # but give them all the same outline
-                outline:
-                    order: 352
-
-        early:
-            filter: { $zoom: { max: 15 } }
+                visible: false
+        # tier1:
+        national_park:
+            filter:
+                all:
+                    - kind: [national_park, battlefield, protected_area]
+                any:
+                    - not: { operator: [ "United States Forest Service" ] }
+                    - protect_class: ['2','3','5']
             draw:
-                lines:
-                    outline:
-                        order: global.feature_order
+                polygons:
+                    style: parks-pixelate
+                    color: [0.976,1.000,0.996]
+                    visible: true
+            us_national_park:
+                # yosemite national park, death valley national park, grand canyon national park
+                filter:
+                    any:
+                        - operator: [ "United States National Park Service" ]
+                        - protect_class: ['2','3','5']
+                draw:
+                    polygons:
+                        style: parks-pixelate
+                        color: [0.976,1.000,0.996]
+                        visible: true
 
-        bridges-tunnels:
-            filter: { any: [is_bridge: true, is_tunnel: true] }
+        conservation:
+            filter:
+                $zoom: { min: 4 }
+                kind: [protected_area, nature_reserve, national_park]
+                not: { protect_class: ['2','3','5']}
             draw:
-                lines:
-                    # cap: butt
-                    outline:
-                        # except bridges and tunnels, their outlines should also self-sort
-                        order: global.feature_order
+                polygons:
+                    style: parks-pixelate
+                    color: [0.976,1.000,0.996]
+                    visible: true
 
-        # default outlines starting at zoom 16
-        default-outline-width:
-            filter: { $zoom: { min: 16 } }
+        national_forest_level_6:
+            filter:
+                all:
+                    - kind: forest
+                any:
+                    - protect_class: ['6']
+                    - operator: ['United States Forest Service']
             draw:
-                lines:
-                    outline:
-                        width: function () { return 3/16 * Math.log($zoom); }
-
-        natural_earth_highways:
-            filter: { $zoom: { min: 5, max: 8 } }
+                polygons:
+                    style: parks-pixelate
+                    color: [0.976,1.000,0.996]
+                    visible: true
+        
+        forest-landcover:
+            filter: { kind: [forest, natural_forest, wood, natural_wood, natural_park], $zoom: { min: 10 }, not: { operator: "United States Forest Service" } }
             draw:
-                lines:
-                    cap: round
-                    join: round
-                    color: [1.000,1.000,1.000]
-                    width: 1px
-            major_road:
-                filter: { kind: major_road }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: 1px
-            minor_road:
-                filter: { kind: minor_road }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: 1px
-            ferry:
-                filter: { kind: ferry }
-                draw:
-                    lines:
-                        color: [0.890,0.890,0.890]
-                        width: 1px
+                polygons:
+                    style: parks-pixelate
+                    color: [0.976,1.000,0.996]
+                    visible: true
 
-        highway:
-            filter: { kind: highway, $zoom: { min: 8 } }
-            draw:
-                lines:
-                    color: [1.000,1.000,1.000]
-                    width: [[5, 2px], [12, 4px]]
-                    # outline:
-                    #     color: [0.900,0.900,0.900]
-                    #     width: [[5, 0.5px], [8, 0.5px], [12, 1px]]
+    # roads:
+    #     data: { source: mapzen, layer: roads }
+    #     draw:
+    #         lines:
+    #             #color: black
+    #             width: 1px
+    #             order: global.feature_order
+    #             # but give them all the same outline
+    #             outline:
+    #                 order: 352
 
-            link:
-                filter: { is_link: true } # on- and off-ramps, etc
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        width: [[5, 1px], [12, 2px]]
-                        cap: butt
-                        # outline:
-                        #     color: [0.900,0.900,0.900]
-                        #     width: [[5, 0.5px], [12, 1px]]
-                early_link:
-                    filter: { $zoom: { max: 15 } }
-                    draw:
-                        lines:
-                            # except bridges and tunnels, their outlines should also self-sort
-                            order: 352
-                tunnel-link:
-                    filter: {is_tunnel: true, $zoom: {min: 13} }
-                    draw:
-                        lines:
-                            color: [1.000,1.000,1.000]
-                            # outline:
-                            #     color: [0.900,0.900,0.900]
+    #     early:
+    #         filter: { $zoom: { max: 15 } }
+    #         draw:
+    #             lines:
+    #                 outline:
+    #                     order: global.feature_order
 
-            tunnel:
-                filter: {is_tunnel: true, $zoom: {min: 13} }
-                draw:
-                    lines:
-                        color: [1.000,1.000,1.000]
-                        # outline:
-                        #     color: [0.900,0.900,0.900]
+    #     bridges-tunnels:
+    #         filter: { any: [is_bridge: true, is_tunnel: true] }
+    #         draw:
+    #             lines:
+    #                 # cap: butt
+    #                 outline:
+    #                     # except bridges and tunnels, their outlines should also self-sort
+    #                     order: global.feature_order
 
-            highway_bridge:
-                filter: {is_bridge: true}
-                draw:
-                    lines:
-                        cap: round
-                        outline:
-                            cap: butt
+    #     # default outlines starting at zoom 16
+    #     default-outline-width:
+    #         filter: { $zoom: { min: 16 } }
+    #         draw:
+    #             lines:
+    #                 outline:
+    #                     width: function () { return 3/16 * Math.log($zoom); }
+
+    #     natural_earth_highways:
+    #         filter: { $zoom: { min: 5, max: 8 } }
+    #         draw:
+    #             lines:
+    #                 cap: round
+    #                 join: round
+    #                 color: [1.000,1.000,1.000]
+    #                 width: 1px
+    #         major_road:
+    #             filter: { kind: major_road }
+    #             draw:
+    #                 lines:
+    #                     color: [1.000,1.000,1.000]
+    #                     width: 1px
+    #         minor_road:
+    #             filter: { kind: minor_road }
+    #             draw:
+    #                 lines:
+    #                     color: [1.000,1.000,1.000]
+    #                     width: 1px
+    #         ferry:
+    #             filter: { kind: ferry }
+    #             draw:
+    #                 lines:
+    #                     color: [0.890,0.890,0.890]
+    #                     width: 1px
+
+    #     highway:
+    #         filter: { kind: highway, $zoom: { min: 8 } }
+    #         draw:
+    #             lines:
+    #                 color: [1.000,1.000,1.000]
+    #                 width: [[5, 2px], [12, 4px]]
+    #                 # outline:
+    #                 #     color: [0.900,0.900,0.900]
+    #                 #     width: [[5, 0.5px], [8, 0.5px], [12, 1px]]
+
+    #         link:
+    #             filter: { is_link: true } # on- and off-ramps, etc
+    #             draw:
+    #                 lines:
+    #                     color: [1.000,1.000,1.000]
+    #                     width: [[5, 1px], [12, 2px]]
+    #                     cap: butt
+    #                     # outline:
+    #                     #     color: [0.900,0.900,0.900]
+    #                     #     width: [[5, 0.5px], [12, 1px]]
+    #             early_link:
+    #                 filter: { $zoom: { max: 15 } }
+    #                 draw:
+    #                     lines:
+    #                         # except bridges and tunnels, their outlines should also self-sort
+    #                         order: 352
+    #             tunnel-link:
+    #                 filter: {is_tunnel: true, $zoom: {min: 13} }
+    #                 draw:
+    #                     lines:
+    #                         color: [1.000,1.000,1.000]
+    #                         # outline:
+    #                         #     color: [0.900,0.900,0.900]
+
+    #         tunnel:
+    #             filter: {is_tunnel: true, $zoom: {min: 13} }
+    #             draw:
+    #                 lines:
+    #                     color: [1.000,1.000,1.000]
+    #                     # outline:
+    #                     #     color: [0.900,0.900,0.900]
+
+    #         highway_bridge:
+    #             filter: {is_bridge: true}
+    #             draw:
+    #                 lines:
+    #                     cap: round
+    #                     outline:
+    #                         cap: butt
 
     buildings:
         data: { source: mapzen, layer: buildings }
@@ -294,7 +286,7 @@ layers:
             polygons:
                 visible: false
                 order: 329
-                color: [0.890,0.890,0.890]
+                color: [1.000,0.970,0.970]
 
         footprints:
             filter:
@@ -351,7 +343,16 @@ styles:
         shaders:
             defines:
                 PIXELATE_SCALE: 40.
-                PIXELATE_COLOR: color.rgb*.85
+                PIXELATE_COLOR: color.rgb*.88
+                PIXELATE_BACKGROUND_COLOR: color.rgb
+
+    parks-pixelate:
+        base: polygons
+        mix: [polygons-pixelate]
+        shaders:
+            defines:
+                PIXELATE_SCALE: 60.
+                PIXELATE_COLOR: vec3(0.911,0.930,0.921)*.98
                 PIXELATE_BACKGROUND_COLOR: color.rgb
 
     polygons-pixelate:
