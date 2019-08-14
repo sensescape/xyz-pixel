@@ -204,6 +204,17 @@ layers:
                     polygons:
                         visible: true
 
+        university:
+            filter:
+                all:
+                    - kind: [university, college]
+                    - $zoom: { min: 14 }
+            draw:
+                polygons:
+                    style: university-pixelate
+                    color: [1.000,0.960,0.930]
+                    visible: true
+
     roads:
         data: { source: mapzen, layer: roads }
         draw:
@@ -676,7 +687,7 @@ layers:
                     - kind_detail: [steps, track, pier]
             draw:
                 lines:
-                    color: global.white_color
+                    color: global.dark_color
                     width: [[14, 0px], [16, 0.15px], [17, 2.5px], [20, 3m]]
                     # outline:
                     #     color: [[13, global.light_color], [15, global.lightest_color]]
@@ -693,7 +704,7 @@ layers:
                 filter: { kind_detail: pedestrian }
                 draw:
                     lines:
-                        color: global.white_color
+                        color: global.dark_color
                         width: [[14, 0px], [16, 0.15px], [17, 2.5px], [20, 3m]]
                         # outline:
                         #     color: [[13, global.light_color], [15, global.lightest_color]]
@@ -702,7 +713,7 @@ layers:
                 filter: { kind_detail: footway }
                 draw:
                     lines:
-                        color: global.white_color
+                        color: global.dark_color
                         width: [[14, 0px], [16, 0.15px], [17, 2.5px], [20, 3m]]
                         # outline:
                         #     color: [[13, global.light_color], [15, global.lightest_color]]
@@ -738,7 +749,7 @@ layers:
             filter: { kind: path, kind_detail: track }
             draw:
                 lines:
-                    color: global.white_color
+                    color: global.dark_color
                     width: [[13, 0px], [16, 0.15px], [17, 2.5px], [20, 4m]]
                     # outline:
                     #     color: [[13, global.light_color], [15, global.lightest_color]]
@@ -773,7 +784,7 @@ layers:
             draw:
                 lines:
                     dash: [0.75, 0.25]
-                    dash_background_color: global.white_color
+                    dash_background_color: global.dark_color
                     order: global.feature_order
                     color: [[15, global.light_color], [19, global.lightest_color]]
                     width: [[15, 0.5px], [18, 3px], [19, 1.5m]]
@@ -817,6 +828,13 @@ layers:
                 polygons:
                     visible: true
                     style: buildings-pixelate
+
+        in_university:
+            filter: { landuse_kind: [university,school] }
+            draw:
+                polygons:
+                    visible: true
+                    style: grid-gradient-university
 
     places:
         data: { source: mapzen, layer: places }
@@ -1037,6 +1055,36 @@ styles:
                 PIXELATE_SCALE: 30.
                 PIXELATE_COLOR: vec3(0.911,0.930,0.921)*.97
                 PIXELATE_BACKGROUND_COLOR: color.rgb
+
+    university-pixelate:
+        base: polygons
+        mix: [polygons-pixelate]
+        shaders:
+            defines:
+                PIXELATE_SCALE: 30.
+                PIXELATE_COLOR: vec3(0.910,0.889,0.874)*.97
+                PIXELATE_BACKGROUND_COLOR: color.rgb
+
+    grid-gradient-university:
+        base: polygons
+        mix: [space-tile]
+        shaders:
+            uniforms:
+                u_colors:
+                    - [1.000,0.950,0.950] # lower-left
+                    - [1.000,1.000,1.000] # lower-right
+                    - [1.000,1.000,1.000] # upper-left
+                    - [1.000,0.926,0.870] # upper-right
+                u_grid_size: 21
+            blocks:
+                color: |
+                    vec2 st = getTileCoords();
+                    vec2 f_st = fract(st * u_grid_size);
+                    color.rgb = mix(
+                        mix(u_colors[0], u_colors[1], f_st.x),
+                        mix(u_colors[2], u_colors[3], f_st.x),
+                        f_st.y
+                    );
 
     polygons-pixelate:
         doc:
