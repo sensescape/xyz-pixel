@@ -836,6 +836,14 @@ layers:
                     visible: true
                     style: grid-gradient-university
 
+        in_park:
+            filter:
+                landuse_kind: [park,forest,nature_reserve,conservation,golf_course,garden]
+            draw:
+                polygons:
+                    visible: true
+                    style: grid-gradient-parks
+
     places:
         data: { source: mapzen, layer: places }
         filter:
@@ -1074,7 +1082,28 @@ styles:
                     - [1.000,0.950,0.950] # lower-left
                     - [1.000,1.000,1.000] # lower-right
                     - [1.000,1.000,1.000] # upper-left
-                    - [1.000,0.926,0.870] # upper-right
+                    - [1.000,0.843,0.770] # upper-right
+                u_grid_size: 21
+            blocks:
+                color: |
+                    vec2 st = getTileCoords();
+                    vec2 f_st = fract(st * u_grid_size);
+                    color.rgb = mix(
+                        mix(u_colors[0], u_colors[1], f_st.x),
+                        mix(u_colors[2], u_colors[3], f_st.x),
+                        f_st.y
+                    );
+
+    grid-gradient-parks:
+        base: polygons
+        mix: [space-tile]
+        shaders:
+            uniforms:
+                u_colors:
+                    - [0.690,1.000,0.850] # lower-left
+                    - [1.000,1.000,1.000] # lower-right
+                    - [1.000,1.000,1.000] # upper-left
+                    - [0.890,1.000,0.982] # upper-right
                 u_grid_size: 21
             blocks:
                 color: |
