@@ -95,7 +95,7 @@ layers:
             polygons:
                 style: water-pixelate
                 order: global.feature_order
-                color: [0.980,0.988,1.000]
+                color: [0.988,0.988,0.988]
 
         lakes:
             filter:
@@ -146,7 +146,7 @@ layers:
             draw:
                 polygons:
                     style: parks-pixelate
-                    color: [0.976,1.000,0.996]
+                    color: [0.980,0.980,0.980]
                     visible: true
             us_national_park:
                 # yosemite national park, death valley national park, grand canyon national park
@@ -157,7 +157,7 @@ layers:
                 draw:
                     polygons:
                         style: parks-pixelate
-                        color: [0.976,1.000,0.996]
+                        color: [0.980,0.980,0.980]
                         visible: true
 
         conservation:
@@ -168,7 +168,7 @@ layers:
             draw:
                 polygons:
                     style: parks-pixelate
-                    color: [0.976,1.000,0.996]
+                    color: [0.980,0.980,0.980]
                     visible: true
 
         national_forest_level_6:
@@ -181,7 +181,7 @@ layers:
             draw:
                 polygons:
                     style: parks-pixelate
-                    color: [0.966,1.000,0.930]
+                    color: [0.980,0.980,0.980]
                     visible: true
         
         forest-landcover:
@@ -189,7 +189,7 @@ layers:
             draw:
                 polygons:
                     style: parks-pixelate
-                    color: [0.976,1.000,0.996]
+                    color: [0.980,0.980,0.980]
                     visible: true
 
         parks-and-national-forests-not-national-park:
@@ -204,7 +204,7 @@ layers:
             draw:
                 polygons:
                     style: parks-pixelate
-                    color: [0.976,1.000,0.996]
+                    color: [0.980,0.980,0.980]
                     visible: true
             national_park:
                 #filter: function() { return feature.name && (feature.name.indexOf('National Park') > -1); }
@@ -224,7 +224,7 @@ layers:
             draw:
                 polygons:
                     style: university-pixelate
-                    color: [1.000,0.960,0.930]
+                    color: [0.980,0.980,0.980]
                     visible: true
 
     roads:
@@ -823,7 +823,7 @@ layers:
             polygons:
                 visible: false
                 order: 329
-                color: [1.000,0.985,0.985]
+                color: [0.985,0.985,0.985]
 
         footprints:
             filter:
@@ -1072,8 +1072,8 @@ styles:
         mix: [polygons-pixelate]
         shaders:
             defines:
-                PIXELATE_SCALE: 30.
-                PIXELATE_COLOR: vec3(0.911,0.930,0.921)*.97
+                PIXELATE_SCALE: 60.
+                PIXELATE_COLOR: color.rgb*.85
                 PIXELATE_BACKGROUND_COLOR: color.rgb
 
     university-pixelate:
@@ -1082,7 +1082,7 @@ styles:
         shaders:
             defines:
                 PIXELATE_SCALE: 30.
-                PIXELATE_COLOR: vec3(0.910,0.889,0.874)*.97
+                PIXELATE_COLOR: color.rgb*.97
                 PIXELATE_BACKGROUND_COLOR: color.rgb
 
     grid-gradient-university:
@@ -1091,10 +1091,10 @@ styles:
         shaders:
             uniforms:
                 u_colors:
-                    - [1.000,0.950,0.950] # lower-left
+                    - [0.950,0.950,0.950] # lower-left
                     - [1.000,1.000,1.000] # lower-right
                     - [1.000,1.000,1.000] # upper-left
-                    - [1.000,0.843,0.770] # upper-right
+                    - [0.843,0.843,0.843] # upper-right
                 u_grid_size: 21
             blocks:
                 color: |
@@ -1112,10 +1112,10 @@ styles:
         shaders:
             uniforms:
                 u_colors:
-                    - [0.690,1.000,0.850] # lower-left
+                    - [0.850,0.850,0.850] # lower-left
                     - [1.000,1.000,1.000] # lower-right
                     - [1.000,1.000,1.000] # upper-left
-                    - [0.890,1.000,0.982] # upper-right
+                    - [0.982,0.982,0.982] # upper-right
                 u_grid_size: 21
             blocks:
                 color: |
