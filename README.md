@@ -5,7 +5,11 @@
 
 ### San Francisco
 [https://sensescape.github.io/xyz-pixel/#15/37.7776/-122.4427](https://sensescape.github.io/xyz-pixel/#15/37.7776/-122.4427)
+
 [https://sensescape.github.io/xyz-pixel/#8/37.946/-121.253](https://sensescape.github.io/xyz-pixel/#8/37.946/-121.253)
+
+### Seattle
+[https://sensescape.github.io/xyz-pixel/#15/47.6064/-122.3366](https://sensescape.github.io/xyz-pixel/#15/47.6064/-122.3366)
 
 [https://explore.xyz.here.com](https://explore.xyz.here.com)
 
