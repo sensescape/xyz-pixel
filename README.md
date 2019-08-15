@@ -1,6 +1,7 @@
 ![GRAPHIC SERIES](https://raw.githubusercontent.com/sensescape/xyz-pixel/master/images/pixel-title4.png)
 
 ![PIXEL](https://raw.githubusercontent.com/sensescape/xyz-pixel/master/images/pixel-map.jpg)
+[https://sensescape.github.io/xyz-pixel/#19/43.81912/-708.80759](https://sensescape.github.io/xyz-pixel/#19/43.81912/-708.80759)
 
 ### San Francisco
 [https://sensescape.github.io/xyz-pixel/#15/37.7776/-122.4427](https://sensescape.github.io/xyz-pixel/#15/37.7776/-122.4427)
