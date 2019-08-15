@@ -11,6 +11,10 @@
 ### Seattle
 [https://sensescape.github.io/xyz-pixel/#15/47.6064/-122.3366](https://sensescape.github.io/xyz-pixel/#15/47.6064/-122.3366)
 
+[https://sensescape.github.io/xyz-pixel/#9/47.6473/-122.3414](https://sensescape.github.io/xyz-pixel/#9/47.6473/-122.3414)
+
+### Explore xyz
+
 [https://explore.xyz.here.com](https://explore.xyz.here.com)
 
 ### To run locally:
