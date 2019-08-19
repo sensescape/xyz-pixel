@@ -121,13 +121,13 @@ layers:
                     - { $zoom: { min: 15 } }
             draw:
                 polygons:
-                    color: [0.980,0.988,1.000]
+                    color: [0.988,0.988,0.988]
 
         other-water-areas:
             filter: { not: { kind: [ocean, lake, water, reservoir] }, $zoom: { min: 11 }, area: { min: 100 } }
             draw:
                 polygons:
-                    color: [0.980,0.988,1.000]
+                    color: [0.988,0.988,0.988]
 
     landuse:
         data: { source: mapzen }
